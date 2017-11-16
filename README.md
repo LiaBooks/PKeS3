@@ -20,19 +20,19 @@ Willkommen zurück im eLearning-System *eLab*.
 Während der Fokus der vorhergehenden Aufgaben auf den aktorischen Hardwarekomponenten unserer Roboterplattform lag, wollen wir in dieser Aufgabe, die ersten Sensoren in Betrieb nehmen.
 
 --{{2}}--
-Mit ihnen wird es uns möglich sein, bestimmte Modalitäten der Umgebung unseres Roboters zu überwachen. Die erhaltenen Umgebungsinformationen können wir in der nächsten Aufgabe nutzen, um eine intelligente Bewegungsstrategie umzusetzen.
+Mit ihnen wird es uns möglich sein, bestimmte Eigenschaften der Umgebung unseres Roboters zu überwachen. Die erhaltenen Umgebungsinformationen können wir in der nächsten Aufgabe nutzen, um eine intelligente Bewegungsstrategie umzusetzen.
 
 --{{3}}--
 Bei den Sensoren, die wir in dieser Aufgabe ansteuern und auslesen werden, handelt es sich um zwei infrarot Distanzsensoren, sowie einer intertialen Messeinheit (engl. *inertial measurement unit (IMU)*) 
 
 --{{4}}--
-Mit Hilfe der Distanzsensoren können wir den Nah- und Fernbereich der Vorderseite unseres Roboters überwachen. Diese Informationen sind zur Implementierung einer Kollisionsvermeidung hilfreich. 
+Mit Hilfe der Distanzsensoren können wir den Nah- und Fernbereich der Vorderseite unseres Roboters überwachen. Diese Informationen sind z.B. zur Implementierung einer Kollisionsvermeidung hilfreich. 
 
 --{{5}}--
-Mit den Informationen der IMU, die sich aus einem 3-Achsen-Gyroskp, 3-Achsen-Beschleunigungssensor, 3-Achsen-Kompass und einem Temperatursensor zusammensetzt, kann eine Überwachung der Positions- und Orientierungsänderungen unseres Roboters umgesetzt werden.
+Mit den Informationen der IMU, die sich aus einem 3-Achsen-Gyroskp, 3-Achsen-Beschleunigungssensor, 3-Achsen-Kompass und einem Temperatursensor zusammensetzt, kann eine Überwachung der Positions- und Orientierungsänderungen unseres Roboters umgesetzt werden. Wir können also, mit einer gewissen Unsicherheit, diese Informationen nutzen um die aktuelle Position des Roboters relativ zu seiner intertialen Position zu bestimmen.
 
 --{{5}}--
-Bevor ihr diese Informationen jedoch nutzen könnt, implementiert ihr in dieser Aufgabe zunächst die Funktionalität zum auslesen der Sensorwerte.
+Bevor ihr diese *high-level* Informationen jedoch generieren könnt, implementiert ihr in dieser Aufgabe zunächst die Funktionalität zum Auslesen der Sensorwerte. Anschließend nutzt ihr die zuvor implementierte Ansteuerung der Motoren, um euren Roboter wiederkehrend in seine Ausgangsposition zu versetzen.
 
 ## Themen und Ziele
 
@@ -43,13 +43,19 @@ Entsprechend der bereits angesprochenen Sensorik (IR Distanzsensoren, IMU) bilde
 Allerdings unterscheidet sich je nach Sensorik, dessen Ausführung und Anbindung an den Mikrocontroller das Vorgehen zum Auslesen aktueller Sensorwerte. 
 
 --{{3}}--
-Im Allgemeinen geben Sensoren zunächst analoge Spannungswerte, die mit dem Wert der gemessenen Modalität korrelieren, aus. Diese müssen mit Hilfe eines Analog-Digital-Wandlers *(engl. analog-digital converter (ADC))* zunächst in digitale Spannungswerte umgesetzt werden. Zwar kann, je nach Ausführung des Sensors, diese Umsetzung schon intern passieren, nichtsdestotrotz bilden ADC einen weiteren Schwerpunkt dieser Aufgabe.
+Im Allgemeinen geben Sensoren zunächst analoge Spannungswerte aus, die mit dem Wert der gemessenen Umgebungsgröße funktional korrelieren. 
 
 --{{4}}--
-Anschließend an die Digitalisierung der Spannungswerte, müssen diese noch entsprechend der Sensorkennlinie in die eigentlich zu messende Modalität umgerechnet werden. 
+Diese müssen mit Hilfe eines Analog-Digital-Wandlers *(engl. analog-digital converter (ADC))* zunächst in digitale Spannungswerte umgesetzt werden. Dies kann, je nach Ausführung, sowohl innerhalb des Sensors implementiert sein, oder durch die Anwendung eines externen ADCs geschehen.
 
 --{{5}}--
-Mit Hilfe dieses Vorgehens und der angesprochenen Sensorik, ist das Ziel dieser Aufgabe, Entfernungen vor dem Roboter sowie dessen Positions- und Orientierungsänderungen zu messen. Ausgewählte Werte sollen durch die 8-Segment-Anzeigen ausgegeben werden.
+Anschließend an die Digitalisierung der Spannungswerte, müssen diese noch entsprechend der Sensorkennlinie in die eigentlich zu messende Umgebungsgröße umgerechnet werden. 
+
+--{{6}}--
+Mit Hilfe dieses Vorgehens und der angesprochenen Sensorik, ist das Ziel dieser Aufgabe, Entfernungen vor dem Roboter, sowie dessen Positions- und Orientierungsänderungen zu messen. Ausgewählte Werte sollen durch die 8-Segment-Anzeigen ausgegeben werden.
+
+--{{7}}--
+Im finalen Schritt bringt ihr eurem Roboter mit Hilfe der gewonnenen Sensorwerte bei, selbstständig zu seiner Ausgangsposition zurückzukehren.
 
 **Themen:**
 
@@ -62,7 +68,8 @@ Mit Hilfe dieses Vorgehens und der angesprochenen Sensorik, ist das Ziel dieser 
 **Ziel(e):**
 
 * Messen von Entfernungen durch Infratorsensorik
-* Messen von Positions- und Orientierungsänderungen 
+* Messen von Positions- und Orientierungsänderungen
+* Sensorbasierte Bewegungsstrategie
 
 
 ## Weitere Informationen
@@ -71,7 +78,10 @@ Mit Hilfe dieses Vorgehens und der angesprochenen Sensorik, ist das Ziel dieser 
 Vertiefend sind die Arbeitsweisen und genutzten physikalischen Prinzipien der einzelnen Sensoren interessant. 
 
 --{{2}}--
-Darüber hinaus sind auch die verschiedenen Varianten von Analog-Digital-Wandler von interesse.
+Darüber hinaus sind auch die verschiedenen Varianten von Analog-Digital-Wandler von Interesse.
+
+--{{3}}--
+Um Daten von peripheren Hardwarkomponenten auf den Mikrocontroller zu übertragen, existieren neben der uns bereits bekannten "PIN-Methode", auch weitere, spezifizierte BUS-System und Protokolle. Hier seien Beispielhaft [I^2^C](https://en.wikipedia.org/wiki/I%C2%B2C) und [SPI](https://en.wikipedia.org/wiki/Serial_Peripheral_Interface_Bus) genannt.
 
 --{{3}}--
 Letztlich findet ihr wie immer die Datenblätter und Dokumentation für diese Aufgabe unter dem Punkt **PKeS**.
@@ -93,6 +103,10 @@ Letztlich findet ihr wie immer die Datenblätter und Dokumentation für diese Au
     height: 315px;
   -->
 
+**Serielle Bus-Protokolle:**
+
+* [I^2^C](https://en.wikipedia.org/wiki/I%C2%B2C)
+* [SPI](https://en.wikipedia.org/wiki/Serial_Peripheral_Interface_Bus)
 
 **Arduino-Projekt:**
 
@@ -118,15 +132,18 @@ Letztlich findet ihr wie immer die Datenblätter und Dokumentation für diese Au
 # Aufgabe 3
 
 --{{1}}--
-Da beide Sharp-Distanzsensoren lediglich analoge Spannungswerte als Repräsentation der gemessenen Distanzen übermitteln, müssen in einem ersten Schritt die entsprechenden Analog-Digital-Wandler konfiguriert werden. 
+Zu Begin dieser Aufgabe, müssen die von den Sensoren gelieferten Werte zunächst ausgelesen und in den Mikrocontroller übertragen werden.
 
 --{{2}}--
-Im Gegensatz zu den Distanzssenoren, überliefert die IMU bereits digitalisierte Spannungswerte. Nichtsdestotrotz müssen die Eingänge des Mikrocontrollers entsprechend konfiguriert werden, um diese Werte auszulesen. Dies soll in der zweiten Teilaufgabe implementiert werden.
+Wie bereits angedeutet, liefern einige Sensoren lediglich analoge Spannungswerte als Repräsentation der gemessenen Umgebungsinformation. Dies trifft auf die beiden Sharp-Distanzsensoren zu. Daher müssen in einem ersten Schritt die entsprechenden Analog-Digital-Wandler (einer für jeden Sensor) konfiguriert werden. So erhaltet ihr die digitalisierten Informationen der Spannungswerte.
 
 --{{3}}--
-Nachdem sowohl die Sensorwerte der Distanzsensoren als auch der IMU nun auf den Mikrocontroller übertragen werden können, müssen die Werte noch in die korrekten Modalitäten konvertiert werden. Diese Konvertierung soll in der dritten Teilaufgabe implementiert werden.
+Im Gegensatz zu den Distanzssenoren überliefert die IMU bereits digitalisierte Spannungswerte. Nichtsdestotrotz müssen die Eingänge des Mikrocontrollers entsprechend konfiguriert werden, um diese Werte auszulesen. Dies soll in der zweiten Teilaufgabe implementiert werden.
 
 --{{4}}--
+Nachdem sowohl die Sensorwerte der Distanzsensoren als auch der IMU nun auf den Mikrocontroller übertragen werden können, müssen die Werte nun noch in die korrekten Einheiten konvertiert werden. Diese Konvertierung soll in der dritten Teilaufgabe implementiert werden.
+
+--{{5}}--
 Letztlich sollen die gemessenen Sensorwerte nun noch durch das Arduinoview-Interface, wie auch durch die 8-Segment-Anzeigen dargestellt werden. Diese Darstellung sollt ihr in der letzten Teilaufgabe implementieren.
 
 **Hinweis:**
