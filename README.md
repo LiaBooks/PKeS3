@@ -23,65 +23,59 @@ Während der Fokus der vorhergehenden Aufgaben auf den aktorischen Hardwarekompo
 Mit ihnen wird es uns möglich sein, bestimmte Eigenschaften der Umgebung unseres Roboters zu überwachen. Die erhaltenen Umgebungsinformationen können wir in der nächsten Aufgabe nutzen, um eine intelligente Bewegungsstrategie umzusetzen.
 
 --{{3}}--
-Bei den Sensoren, die wir in dieser Aufgabe ansteuern und auslesen werden, handelt es sich um zwei infrarot Distanzsensoren, sowie einer intertialen Messeinheit (engl. *inertial measurement unit (IMU)*) 
+Bei den Sensoren, die wir in dieser Aufgabe ansteuern und auslesen werden, handelt es sich um zwei infrarot Distanzsensoren, sowie eine intertiale Messeinheit (engl. *inertial measurement unit (IMU)*) 
 
 --{{4}}--
 Mit Hilfe der Distanzsensoren können wir den Nah- und Fernbereich der Vorderseite unseres Roboters überwachen. Diese Informationen sind z.B. zur Implementierung einer Kollisionsvermeidung hilfreich. 
 
 --{{5}}--
-Mit den Informationen der IMU, die sich aus einem 3-Achsen-Gyroskp, 3-Achsen-Beschleunigungssensor, 3-Achsen-Kompass und einem Temperatursensor zusammensetzt, kann eine Überwachung der Positions- und Orientierungsänderungen unseres Roboters umgesetzt werden. Wir können also, mit einer gewissen Unsicherheit, diese Informationen nutzen um die aktuelle Position des Roboters relativ zu seiner intertialen Position zu bestimmen.
+Mit den Informationen der IMU, die sich aus einem 3-Achsen-Gyroskop, 3-Achsen-Beschleunigungssensor, 3-Achsen-Kompass und einem Temperatursensor zusammensetzt, kann eine Überwachung der Positions- und Orientierungsänderungen unseres Roboters umgesetzt werden. Wir können also, mit einer gewissen Unsicherheit, diese Informationen nutzen um die aktuelle Position des Roboters relativ zu seiner intertialen Position zu bestimmen.
 
 --{{5}}--
-Bevor ihr diese *high-level* Informationen jedoch generieren könnt, implementiert ihr in dieser Aufgabe zunächst die Funktionalität zum Auslesen der Sensorwerte. Anschließend nutzt ihr die zuvor implementierte Ansteuerung der Motoren, um euren Roboter wiederkehrend in seine Ausgangsposition zu versetzen.
+Bevor ihr diese *high-level* Informationen jedoch generieren könnt, implementiert ihr in dieser Aufgabe zunächst die Funktionalität zum Auslesen der Sensorwerte. 
 
 ## Themen und Ziele
 
 --{{1}}--
-Entsprechend der bereits angesprochenen Sensorik (IR Distanzsensoren, IMU) bilden deren Messverfahren und speziellen Ausführungen ein Kernthema dieser Aufgabe.
+Entsprechend der bereits angesprochenen Sensorik (IR-Distanzsensoren, IMU) bilden deren Messverfahren und speziellen Ausführungen ein Kernthema dieser Aufgabe.
 
 --{{2}}--
 Allerdings unterscheidet sich je nach Sensorik, dessen Ausführung und Anbindung an den Mikrocontroller das Vorgehen zum Auslesen aktueller Sensorwerte. 
 
 --{{3}}--
-Im Allgemeinen geben Sensoren zunächst analoge Spannungswerte aus, die mit dem Wert der gemessenen Umgebungsgröße funktional korrelieren. 
+Im Allgemeinen geben Sensoren zunächst analoge Spannungswerte aus, die mit dem Wert der gemessenen Umgebungsgröße funktional korrelieren. Diese müssen mit Hilfe eines Analog-Digital-Wandlers *(engl. analog-digital converter (ADC))* zunächst in digitale Spannungswerte umgesetzt werden. In Abhängigkeit von der konkreten Ausführung des Sensors, kann dies bereits innerhalb des Sensors geschehen, oder muss durch einen externen ADC implementiert werden.
 
 --{{4}}--
-Diese müssen mit Hilfe eines Analog-Digital-Wandlers *(engl. analog-digital converter (ADC))* zunächst in digitale Spannungswerte umgesetzt werden. Dies kann, je nach Ausführung, sowohl innerhalb des Sensors implementiert sein, oder durch die Anwendung eines externen ADCs geschehen.
+Anschließend an die Digitalisierung der Spannungswerte müssen diese noch entsprechend der Sensorkennlinie in die eigentlich zu messende Umgebungsgröße umgerechnet werden. 
 
 --{{5}}--
-Anschließend an die Digitalisierung der Spannungswerte, müssen diese noch entsprechend der Sensorkennlinie in die eigentlich zu messende Umgebungsgröße umgerechnet werden. 
-
---{{6}}--
-Mit Hilfe dieses Vorgehens und der angesprochenen Sensorik, ist das Ziel dieser Aufgabe, Entfernungen vor dem Roboter, sowie dessen Positions- und Orientierungsänderungen zu messen. Ausgewählte Werte sollen durch die 8-Segment-Anzeigen ausgegeben werden.
-
---{{7}}--
-Im finalen Schritt bringt ihr eurem Roboter mit Hilfe der gewonnenen Sensorwerte bei, selbstständig zu seiner Ausgangsposition zurückzukehren.
+Mit Hilfe dieses Vorgehens und der angesprochenen Sensorik, ist das Ziel dieser Aufgabe, Entfernungen vor dem Roboter, sowie dessen Positions- und Orientierungsänderungen zu messen. Ausgewählte Werte sollen durch die 8-Segment-Anzeigen ausgegeben werden. Letztlich sollen die Informationen so verarbeitet werden, dass ein Positionstracking des Roboters möglich ist.
 
 **Themen:**
 
 * Infrarot Distanzsensoren
 * Inertiale Messeinheit (engl. *inertial measurement unit (IMU)*)
-* Analog-Digital-Converter (ADC) zum umwandeln Analoger in digitale Signale 
+* Analog-Digital-Converter (ADC)
 * Interpretation von Spannungswerten anhand von Kennlinien 
 
 
 **Ziel(e):**
 
-* Messen von Entfernungen durch Infratorsensorik
+* Messen von Entfernungen durch Infrarot-Sensorik
 * Messen von Positions- und Orientierungsänderungen
-* Sensorbasierte Bewegungsstrategie
+* Interpretation der Sensorwerte über die Zeit (Position, Orientierung)
 
 
 ## Weitere Informationen
 
 --{{1}}--
-Vertiefend sind die Arbeitsweisen und genutzten physikalischen Prinzipien der einzelnen Sensoren interessant. 
+Wie schon durch die Vorlesung bekannt, sind die physikalischen Prinzipien der einzelnen Sensoren interessant für diese Aufgabe.
 
 --{{2}}--
-Darüber hinaus sind auch die verschiedenen Varianten von Analog-Digital-Wandler von Interesse.
+Darüber hinaus sind auch die verschiedenen Varianten von Analog-Digital-Wandler von Interesse. Informiert euch auch darüber, welche Varianten uns der [AVR ATmega32U4](http://www.atmel.com/Images/Atmel-7766-8-bit-AVR-ATmega16U4-32U4_Datasheet.pdf) bietet.
 
 --{{3}}--
-Um Daten von peripheren Hardwarkomponenten auf den Mikrocontroller zu übertragen, existieren neben der uns bereits bekannten "PIN-Methode", auch weitere, spezifizierte BUS-System und Protokolle. Hier seien Beispielhaft [I^2^C](https://en.wikipedia.org/wiki/I%C2%B2C) und [SPI](https://en.wikipedia.org/wiki/Serial_Peripheral_Interface_Bus) genannt.
+Neben der von uns hauptsächlich genutzten Anbindung peripherer Hardwarkomponenten an die Mikrocontroller, existieren noch leistungsfähigere Bus-Systeme. Hier seien Beispielhaft [I2C](https://en.wikipedia.org/wiki/I%C2%B2C) und [SPI](https://en.wikipedia.org/wiki/Serial_Peripheral_Interface_Bus) genannt. Interessant ist vor allem der *I^2^C*-Bus (alternative Schreibweise: *I2C*), da über eine solche Variante die IMU an unseren Mikrocontroller angeschlossen ist. **Hinweise: im Datenblatt des Mikrocontrollers wird hier auch von *TWI* gesprochen!**
 
 --{{3}}--
 Letztlich findet ihr wie immer die Datenblätter und Dokumentation für diese Aufgabe unter dem Punkt **PKeS**.
@@ -105,7 +99,7 @@ Letztlich findet ihr wie immer die Datenblätter und Dokumentation für diese Au
 
 **Serielle Bus-Protokolle:**
 
-* [I^2^C](https://en.wikipedia.org/wiki/I%C2%B2C)
+* [I2C](https://en.wikipedia.org/wiki/I%C2%B2C)
 * [SPI](https://en.wikipedia.org/wiki/Serial_Peripheral_Interface_Bus)
 
 **Arduino-Projekt:**
@@ -121,8 +115,11 @@ Letztlich findet ihr wie immer die Datenblätter und Dokumentation für diese Au
 **PKeS:**
 
 * [Datenblatt IMU (MPU-9255)](https://stanford.edu/class/ee267/misc/MPU-9255-Datasheet.pdf)
-* [Datenblatt infrarot Distanzsensor Sharp GP2Y0A41SK0F](https://www.pololu.com/file/0J713/GP2Y0A41SK0F.pdf)
-* [Datenblatt infrarot Distanzsensor Sharp GP2Y0A02YK0F](https://www.sparkfun.com/datasheets/Sensors/Infrared/gp2y0a02yk_e.pdf)
+* [Datenblatt IMU (MPU-9255) Register Map](https://stanford.edu/class/ee267/misc/MPU-9255-Register-Map.pdf)
+* [Datenblatt IMU (MPU-9250)](http://www.invensense.com/wp-content/uploads/2015/02/PS-MPU-9250A-01-v1.1.pdf)
+* [Datenblatt IMU (MPU-9250) Register Map](http://www.invensense.com/wp-content/uploads/2017/11/RM-MPU-9250A-00-v1.6.pdf)
+* [Datenblatt infrarot Distanzsensor Sharp GP2Y0A41SK0F](http://sharp-world.com/products/device/lineup/data/pdf/datasheet/gp2y0a41sk_e.pdf)
+* [Datenblatt infrarot Distanzsensor Sharp GP2Y0A02YK0F]( http://sharp-world.com/products/device/lineup/data/pdf/datasheet/gp2y0a02yk_e.pdf)
 * [Datenblatt Motortreiber](http://www.st.com/content/ccc/resource/technical/document/datasheet/59/d0/ce/41/56/bb/4b/10/DM00034699.pdf/files/DM00034699.pdf/jcr:content/translations/en.DM00034699.pdf)
 * [Schaltbelegungsplan](https://github.com/liaScript/PKeS0/blob/master/materials/robubot_stud.pdf?raw=true)
 * [Arduinoview](https://github.com/fesselk/Arduinoview/blob/master/doc/Documetation.md)
@@ -132,19 +129,16 @@ Letztlich findet ihr wie immer die Datenblätter und Dokumentation für diese Au
 # Aufgabe 3
 
 --{{1}}--
-Zu Begin dieser Aufgabe, müssen die von den Sensoren gelieferten Werte zunächst ausgelesen und in den Mikrocontroller übertragen werden.
+Zu Begin dieser Aufgabe müssen die von den Sensoren gelieferten Werte zunächst ausgelesen und in den Mikrocontroller übertragen werden.
 
 --{{2}}--
-Wie bereits angedeutet, liefern einige Sensoren lediglich analoge Spannungswerte als Repräsentation der gemessenen Umgebungsinformation. Dies trifft auf die beiden Sharp-Distanzsensoren zu. Daher müssen in einem ersten Schritt die entsprechenden Analog-Digital-Wandler (einer für jeden Sensor) konfiguriert werden. So erhaltet ihr die digitalisierten Informationen der Spannungswerte.
+Wie bereits angedeutet, liefern einige Sensoren lediglich analoge Spannungswerte als Repräsentation der gemessenen Umgebungsinformation. Dies trifft auf die beiden Sharp-Distanzsensoren zu. Daher müssen in einem ersten Schritt die entsprechenden Analog-Digital-Wandler (einer für jeden Sensor) konfiguriert werden. So erhaltet ihr die digitalisierten Informationen der Spannungswerte. Diese müssen dann für jeden der beiden Distanzsensoren individuell in Entfernungswerte konvertiert werden.
 
 --{{3}}--
-Im Gegensatz zu den Distanzssenoren überliefert die IMU bereits digitalisierte Spannungswerte. Nichtsdestotrotz müssen die Eingänge des Mikrocontrollers entsprechend konfiguriert werden, um diese Werte auszulesen. Dies soll in der zweiten Teilaufgabe implementiert werden.
+Im Gegensatz zu den Distanzssensoren überliefert die IMU bereits digitalisierte Spannungswerte. Allerdings ist die IMU über einen I^2^C-Bus angeschlossen, den ihr nutzen müsst, um die IMU entsprechend zu konfigurieren und aktuelle Sensorwerte auszulesen. Dies soll in der zweiten Teilaufgabe implementiert werden. Ähnlich zu den Distanzsensoren müssen auch hier die von dem Sensor gelieferten Werte konvertiert werden.
 
 --{{4}}--
-Nachdem sowohl die Sensorwerte der Distanzsensoren als auch der IMU nun auf den Mikrocontroller übertragen werden können, müssen die Werte nun noch in die korrekten Einheiten konvertiert werden. Diese Konvertierung soll in der dritten Teilaufgabe implementiert werden.
-
---{{5}}--
-Letztlich sollen die gemessenen Sensorwerte nun noch durch das Arduinoview-Interface, wie auch durch die 8-Segment-Anzeigen dargestellt werden. Diese Darstellung sollt ihr in der letzten Teilaufgabe implementieren.
+Letztlich sollen die gemessenen Sensorwerte nun noch durch das Arduinoview-Interface, wie auch durch die 8-Segment-Anzeigen, dargestellt werden. Diese Darstellung sollt ihr in der letzten Teilaufgabe implementieren. Darüber hinaus sollen die Informationen der IMU genutzt werden, um ein einfaches Positionstracking zu implementieren.
 
 **Hinweis:**
 
@@ -153,62 +147,96 @@ Letztlich sollen die gemessenen Sensorwerte nun noch durch das Arduinoview-Inter
 
 **Teilaufgaben**
 
-* *3.1:* Konfiguration des ADC zum Auslesen analoger Sensorwerte
-* *3.2:* Konfiguration des Mikrocontrollers zum Auslesen der IMU
-* *3.3:* Umwandlung der digitalisierten Spannungswerte in die entsprechenden Modalitäten
-* *3.4:* Visualisierung der Sensorwerte und Anzeige auf 8-Segment-Display.
+* *3.1:* Auslesen der Distanzsensoren und Konvertieren der Sensorwerte.
+* *3.2:* Auslesen der IMU und Konvertieren der Sensorwerte.
+* *3.4:* Visualisierung der Sensorwerte, Anzeige auf den 8-Segment-Anzeigen und Implementierung eines einfachen Positionstracking
 
 Die Aufgabe ist bis zu der Woche vom **18.12. - 22.12.2017** vorzubereiten.
 
 
 ## Aufgabe 3.1
 
+--{{1}}--
+Das Ziel dieser Aufgabe ist es, die Distanzsensoren an der Vorderseite unserer Roboterplattform in Betrieb zu nehmen.
+
+--{{2}}--
+Der erste Schritt dazu ist, den entsprechenden Analog-Digital-Konverter für die Verwendung mit den Distanzsensoren zu konfigurieren. 
+
+--{{3}}--
+Damit das Auslesen der Sensorwerte zyklisch geschehen kann, implementiert die Funktion `xyz(uint8_t channel)`, die den aktuellen, digitalisierten Spannungswert des ausgewählten Sensors liefern soll.
+
+--{{4}}--
+Im letzten Schritt muss der digitalisierte Spannungswert entsprechend der Kennlinie des jeweiligen Distanzsensors in Milimeter konvertiert werden. Implementiert dazu die Funktionen `abc_LR()` und `abc_SR()` (wobei *LR* für *Long Range* und *SR* für *Short Range* steht),
 
 **Ziel:**
-
---{{1}}--
-In der Ersten Teilaufgabe sollt ihr Zunächst den ADC des Microcontrollers Konfigurieren, um Werte von den analogen Eingängen zu lesen. In der zweiten Aufgabe sollen diese Werte interpretiert werden.
-
+Implementiert das Auslesen der Sensorwerte beider Distanzsensoren und konvertiert die Spannungswerte in Distanzwerte in Millimeter (mm). 
 
 **Teilschritte:**
 
-1. Recherche: 
-   * Informiert euch grundlegend über ADCs
-   * Lest das Kapitel ... im Handbuch des Microcontrollers um herrauszufinden, welche Register wie Konfiguriert werden müssen. 
-2. Konfiguriert den ADC und beginnt, die Werte auszulesen. Ihr werdet 10-Bit Nutzdaten erhalten.
-
+1. Konfiguriert Analog-Digital-Wandler für die Verwendung mit den Distanzsensoren.
+2. Implementiert Funktion `xyz()` zum Auslesen der Distanzsensoren (digitalisierte Spannungswerte).
+3. Implementiert Funktionen `abc_LR()` und `abc_SR()` zur Transformation der Spannungswerte in Distanzwerte (mm) für beide Sensoren.
 
 ## Aufgabe 3.2
 
+--{{1}}--
+Nachdem wir nun die Ansteuerung der Distanzsensoren erfolgreich implementiert haben, wollen wir auch die Daten der inertialen Messeinheit auslesen und konvertieren.
+
+--{{2}}--
+Die IMU ist, im Gegensatz zu den Distanzsensoren, per I^2^C an den Mikrocontroller angeschlossen. Daher haben wir euch eine Implementierung per I^2^C vorgegeben. Um diese zu Initialisieren, müsst ihr zunächst `initI2C()` aufrufen.
+
+--{{3}}--
+Anschließend könnt ihr mit Hilfe der I^2^C-Kommunikation die aktuellen Sensorwerte aus der IMU auslesen. Dort sind vorallem die Beschleunigungs- und Drehraten für uns von interesse. 
+
+--{{4}}--
+Wie schon bei den Distanzsensoren erhaltet ihr von der IMU lediglich Werte die proportional zu den Beschleunigungen bzw. Drehraten sind. Daher müsst ihr auch diese Werte in $\frac{m}{s^2}$ bzw. $\frac{deg}{s}$ konvertieren.
+
 **Ziel:**
-
-In dieser Teilaufgabe geht es darum, die ausgelesenen Werte entsprechend der Datenblätter zu interpretieren.
-Ihr habt diese Aufgabe erfolgreich absolviert, wenn euer Roboter das folgene kann:
-
-1. Rohe Sensorwerte auslesen, und in sinnvolle Werte umrechnen.
-   * Einheit: cm
-   * Genauigkeit: +- 2 cm
-   * Reichweite lang: 40 - 70 cm
-   * Reichweite kurz: 10 - 40 cm
-2. Die aktuellen Werte auf dem 8-Segment-Display anzeigen. 
+Implementiert das Auslesen und Transformieren der Beschleunigungs- und  Drehratenwerte der IMU.
 
 **Teilschritte:**
 
-1. Recherche: informiert euch über die unterschiedlichen Sensortypen und ihre jeweiligen Kennlinien. 
-2. Rechnet die erhaltenen 10-Bit-werte in eine konkrete Entfernung um. Dafür gibt es mehrere sinnvolle möglichkeiten, seid kreativ! Wenn ihr mit eurem Ergebnis zufrieden seid, könnte ihr es auf dem 8-Segment-Display ausgeben und testen. 
-
+1. Implementiert das Auslesen und Transformieren der Beschleunigungs- und  Drehratenwerte der IMU.
 
 ## Aufgabe 3.3
 
+--{{1}}--
+Da wir nun die Umgebung unseres Roboters mit Hilfe unserer Sensoren beobachten können, wollen wir die erhaltenen Werte natürlich noch entsprechend darstellen.
+
+--{{2}}--
+Daher besteht das Ziel dieser Aufgabe darin, die Sensorwerte mit Hilfe von Arduinoview zu visualisieren und ein einfaches Positionstracking zu implementieren.
+
+--{{3}}--
+Im ersten Schritt solltet ihr eurem Arduinoview ein Diagramm hinzufügen, in dem ihr die aktuellen Werte der Distanzsensoren visualisiert.
+
+--{{4}}--
+Äquivalent zum vorhergehen Schritt könnt ihr nun ein weiteres Diagramm dem Arduinoview-Interface hinzufügen, in dem ihr die Beschleunigungswerte der 3-Achsen der IMU darstellt.
+
+--{{5}}--
+Da uns die IMU auch Drehraten für die 3 Achsen bereitstellt, sollen auch diese Werte in einem separaten Diagramm dargestellt werden.
+
+--{{6}}--
+Da uns durch die Aufgabe 1 nun auch die 8-Segment-Anzeigen zur Darstellung von Zeichen zur Verfügung steht, wollen wir diese natürlich auch nutzen. Gebt daher jeweils den kleinsten der beiden Distanzwerte auf der Anzeige aus. Falls lediglich ein Distanzsensor valide Werte liefert, gebt ihr diesen aus. Falls beide Distanzsensoren keine validen Werte liefern, gebt ein '---' auf dem Display aus. 
+
+--{{7}}--
+Zuletzt möchten wir die Daten der IMU für ein einfaches Positionstracking nutzen. Lest dazu sowohl die Beschleunigungs- als auch die Drehraten der IMU über die gesamte Ausführungszeit aus und konvertiert sie so, dass ihr eine Positions- und Orientierungsangabe relativ zu der Startposition des Roboters erhaltet. Gebt letztlich die Position ($x~in~[mm]$ , $y~in~[mm]$) und Orientierung ($\theta~in~[^\circ]$) über das Arduinoview-Interface kontinuierlich aus.
+
 **Ziel:**
+Visualisiert die Sensordaten mit Diagrammen in Arduinoview und zeigt die Position ($x$,$y$) und Orientierung ($\theta$) des Roboters relativ zu seiner Startposition an.
 
 **Teilschritte:**
 
-## Aufgabe 3.4
+1. Stellt die aktuellen Werte beider Distanzsensoren in einem Diagramm dar.
+2. Stellt die aktuellen Beschleunigungswerte aller 3 Achsen in einem Diagramm dar.
+3. Stellt die aktuellen Drehraten aller 3 Achsen in einem Diagramm dar.
+4. Gebt einen validen Distanzwert auf den 8-Segment-Anzeigen aus
 
-**Ziel:**
+   * Falls die Distanzwerte beider Distanzsensoren valide sind, gebt den kleineren Wert aus.
+   * Falls die lediglich ein Distanzwert valide ist, gebt diesen Wert aus.
+   * Falls kein Distanzsensor einen validen Wert liefert, gebt '---' auf dem Display aus.
+   
+5. Konvertiert die Beschleunigungs- und Drehratenwerte in eine Roboterposition, d.h. $x$,$y$,$\theta$.
 
-**Teilschritte:**
 
 # Quizze
 
@@ -227,24 +255,34 @@ Ihr habt diese Aufgabe erfolgreich absolviert, wenn euer Roboter das folgene kan
   [( )] Ein Schwingkreis
   [(X)] Eine Sample-And-Hold Schaltung
   [( )] Ein Gleichrichter
+  
+**Wie viele Komparatoren benötigt ein 10-Bit Flash-ADC?**
+
+  [( )] 1021
+  [( )] 1022
+  [(X)] 1023
+  [( )] 1024
 
 
 ## Distanzsensoren
 
-**Welche Vorgehen zur optischen Distanzmessung können unterschieden werden?**
+**Welche Vorgehen zur lichtbasierten Distanzmessung können unterschieden werden?**
 
-[[X]] Time-of-Flight
-[[X]] Laufzeitmessung
-[[X]] Triangulation
-[[ ]] Quadratur
-[[X]] Phasenverschiebung
-[[ ]] Parallelverschiebung
+  [[X]] Time-of-Flight
+  [[X]] Laufzeitmessung
+  [[X]] Triangulation
+  [[ ]] Quadratur
+  [[X]] Phasenverschiebung
+  [[ ]] Parallelverschiebung
 
-**Auf welchem physikalischem Zusammenhang basieren kapazitive Distanzsensoren?**
+**Auf welchem Vorgehen zur lichtbasierten Distanzmessung basiert der SharpGP2Y0A41SK0F?**
 
-  [( )] $R = \frac{U}{I}$
-  [(X)] $C = \epsilon \cdot \frac{A}{d}$
-  [( )] $L = \frac{\Psi}{I}$
+  [( )] Time-of-Flight
+  [( )] Laufzeitmessung
+  [(X)] Triangulation
+  [( )] Quadratur
+  [( )] Phasenverschiebung
+  [( )] Parallelverschiebung
   
 ## Inertiale Messeinheit
 
