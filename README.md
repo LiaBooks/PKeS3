@@ -240,6 +240,9 @@ Visualisiert die Sensordaten mit Diagrammen in Arduinoview und zeigt die Positio
 
 # Quizze
 
+--{{1}}--
+Wie auch in der letzten Aufgabe haben wir noch ein paar kurze Fragen an euch.
+
 ## Analog-Digital-Wandler
 
 **Welche Vorteile hat ein Flash-ADC gegenüber einem Analog-Digital-Wandler, der nach dem Wägeverfahren arbeitet?**
