@@ -138,9 +138,16 @@ Im Gegensatz zu den Distanzssensoren überliefert die IMU bereits digitalisierte
 --{{4}}--
 Letztlich sollen die gemessenen Sensorwerte nun noch durch das Arduinoview-Interface, wie auch durch die 8-Segment-Anzeigen, dargestellt werden. Diese Darstellung sollt ihr in der letzten Teilaufgabe implementieren. Darüber hinaus sollen die Informationen der IMU genutzt werden, um ein einfaches Positionstracking zu implementieren.
 
+--{{5}}--
+Im Gegensatz zu den bisherigen Aufgaben greifen wir diesesmal auf eure bisherigen Implementierungen zurück. Dies betrifft die Ansteuerung der 8-Segment-Anzeigen, sowie der Motoren. Während die 8-Segment-Anzeige direkt zur Bearbeitung der Aufgabe notwendig ist, könnt ihr die Motoren und den zur Ansteuerung bekannten *Joystick* nutzen, um den Roboter zu bewegen und so eure Sensorik zu testen. 
+
+--{{6}}--
+Damit ihr eure Lösungen aus den vorherigen Aufgaben weiter nutzen könnt, müsst ihr sie aus den entsprechenden Projekten kopieren. Wie ihr sicherlich bemerkt habt, befindet sich das eLab noch in einem jungen Stadium, sodass wir noch keine Gelegenheit hatten für einen automatisierten Austausch des Quellcodes zwischen Projekten/Aufgaben zu sorgen. Wir bitten das zu entschuldigen.
+
+
 **Hinweis:**
 
-**Verwendet bei der Bearbeitung der Aufgabe keine Funktionen aus der Arduino-Bibliothek. Lediglich die Funktionen der `Serial`-Klasse zur Ansteuerung der seriellen Schnittstelle, sowie der Funktion `millis()` zur einfachen Zeitmessung können genutzt werden.**
+**Verwendet bei der Bearbeitung der Aufgabe keine Funktionen aus der Arduino-Bibliothek. Lediglich die Funktionen der `Serial`-Klasse zur Ansteuerung der seriellen Schnittstelle, der Funktion `millis()` zur einfachen Zeitmessung, sowie der Funktionen aus `Wire.h` für die I^2^C Kommunikation können genutzt werden.**
 
 
 **Teilaufgaben**
@@ -155,16 +162,16 @@ Die Aufgabe ist bis zu der Woche vom **18.12. - 22.12.2017** vorzubereiten.
 ## Aufgabe 3.1
 
 --{{1}}--
-Das Ziel dieser Aufgabe ist es, die Distanzsensoren an der Vorderseite unserer Roboterplattform in Betrieb zu nehmen.
+Das Ziel dieser Aufgabe ist es, die Distanzsensoren an der Vorderseite unserer Roboterplattform in Betrieb zu nehmen. Implementiert dazu die Funktionen in `Distance.{h,cpp}`.
 
 --{{2}}--
-Der erste Schritt dazu ist, den entsprechenden Analog-Digital-Konverter für die Verwendung mit den Distanzsensoren zu konfigurieren. 
+Der erste Schritt dazu ist, den entsprechenden Analog-Digital-Konverter für die Verwendung mit den Distanzsensoren zu konfigurieren. Dies soll in der Funktion `configADC()` geschehen.
 
 --{{3}}--
-Damit das Auslesen der Sensorwerte zyklisch geschehen kann, implementiert die Funktion `xyz(uint8_t channel)`, die den aktuellen, digitalisierten Spannungswert des ausgewählten Sensors liefern soll.
+Damit das Auslesen der Sensorwerte zyklisch geschehen kann, implementiert ihr im nächsten Schritt die Funktion `readADC(uint8_t channel)`, die den aktuellen, digitalisierten Spannungswert des ausgewählten Sensors liefern soll.
 
 --{{4}}--
-Im letzten Schritt muss der digitalisierte Spannungswert entsprechend der Kennlinie des jeweiligen Distanzsensors in Milimeter konvertiert werden. Implementiert dazu die Funktionen `abc_LR()` und `abc_SR()` (wobei *LR* für *Long Range* und *SR* für *Short Range* steht),
+Im letzten Schritt muss der digitalisierte Spannungswert entsprechend der Kennlinie des jeweiligen Distanzsensors in Milimeter konvertiert werden. Implementiert dazu die Funktionen `linearizeLR(uint16_t voltage)` und `linearizeSR(uint16_t voltage)` (wobei *LR* für *Long Range* und *SR* für *Short Range* steht). Ihr könnt dazu die entsprechenden Kennlinien aus den Datenblättern der Sensoren nutzen. Beachtet, dass wir die Distanzwerte in Millimeter (mm) darstellen wollen!
 
 **Ziel:**
 Implementiert das Auslesen der Sensorwerte beider Distanzsensoren und konvertiert die Spannungswerte in Distanzwerte in Millimeter (mm). 
@@ -172,8 +179,8 @@ Implementiert das Auslesen der Sensorwerte beider Distanzsensoren und konvertier
 **Teilschritte:**
 
 1. Konfiguriert Analog-Digital-Wandler für die Verwendung mit den Distanzsensoren.
-2. Implementiert Funktion `xyz()` zum Auslesen der Distanzsensoren (digitalisierte Spannungswerte).
-3. Implementiert Funktionen `abc_LR()` und `abc_SR()` zur Transformation der Spannungswerte in Distanzwerte (mm) für beide Sensoren.
+2. Implementiert Funktion `readADC(uint8_t channel)` zum Auslesen der Distanzsensoren (digitalisierte Spannungswerte).
+3. Implementiert Funktionen `linearizeLR(uint16_t voltage)` und `linearizeSR(uint16_t voltage)` zur Transformation der Spannungswerte in Distanzwerte (mm) für beide Sensoren.
 
 ## Aufgabe 3.2
 
@@ -181,16 +188,16 @@ Implementiert das Auslesen der Sensorwerte beider Distanzsensoren und konvertier
 Nachdem wir nun die Ansteuerung der Distanzsensoren erfolgreich implementiert haben, wollen wir auch die Daten der inertialen Messeinheit auslesen und konvertieren.
 
 --{{2}}--
-Die IMU ist, im Gegensatz zu den Distanzsensoren, per I^2^C an den Mikrocontroller angeschlossen. Daher haben wir euch eine Implementierung per I^2^C vorgegeben. Um diese zu Initialisieren, müsst ihr zunächst `initI2C()` aufrufen.
+Die IMU ist, im Gegensatz zu den Distanzsensoren, per I^2^C an den Mikrocontroller angeschlossen. Daher haben wir euch eine Implementierung zur Kommunikation mit der IMU vorgegeben. Um diese zu Initialisieren, müsst ihr zunächst `initializeIMU()` aufrufen.
 
 --{{3}}--
-Anschließend könnt ihr mit Hilfe der I^2^C-Kommunikation die aktuellen Sensorwerte aus der IMU auslesen. Dort sind vorallem die Beschleunigungs- und Drehraten für uns von interesse. 
+Anschließend könnt ihr mit Hilfe der I^2^C-Kommunikation die aktuellen Sensorwerte aus der IMU auslesen. Dort sind vorallem die Beschleunigungs- und Drehraten für uns von interesse. Daher füllt die Funktion `readIMU(struct IMUdata& d)` die Struktur `IMUdata`.
 
 --{{4}}--
-Wie schon bei den Distanzsensoren erhaltet ihr von der IMU lediglich Werte die proportional zu den Beschleunigungen bzw. Drehraten sind. Daher müsst ihr auch diese Werte in $\frac{m}{s^2}$ bzw. $\frac{deg}{s}$ konvertieren.
+Wie schon bei den Distanzsensoren erhaltet ihr von der IMU lediglich Werte die proportional zu den Beschleunigungen bzw. Drehraten sind. Daher müsst ihr auch diese Werte in $\frac{m}{s^2}$ bzw. $\frac{deg}{s}$ konvertieren. Implementiert dazu die Funktion `linearizeIMU(struct IMUdata& data)`.
 
 **Ziel:**
-Implementiert das Auslesen und Transformieren der Beschleunigungs- und  Drehratenwerte der IMU.
+Implementiert das Auslesen und Transformieren der Beschleunigungs- und  Drehratenwerte der IMU. Beschleunigungen sollen in $\frac{m}{s^2}$ und Drehraten in $\frac{deg}{s}$ repräsentiert werden.
 
 **Teilschritte:**
 
@@ -233,7 +240,7 @@ Visualisiert die Sensordaten mit Diagrammen in Arduinoview und zeigt die Positio
    * Falls die lediglich ein Distanzwert valide ist, gebt diesen Wert aus.
    * Falls kein Distanzsensor einen validen Wert liefert, gebt '---' auf dem Display aus.
    
-5. Konvertiert die Beschleunigungs- und Drehratenwerte in eine Roboterposition, d.h. $x$,$y$,$\theta$.
+5. Konvertiert die Beschleunigungs- und Drehratenwerte in eine Roboterposition und -Orientierung, d.h. $x$,$y$,$\theta$.
 
 
 # Quizze
@@ -305,5 +312,5 @@ Wie auch in der letzten Aufgabe haben wir noch ein paar kurze Fragen an euch.
   [(X)] magnetsiche Flussdichte, Beschleunigung, Drehwinkelbeschleunigung
   [( )] magnetische Flussdichte, Geschwindigkeit, Drehwinkelbeschleunigung
   [( )] magnetische Flussdichte, Geschwindigkeit, Orientierung
-  [( )] magnetische Feldstärle, Beschleunigung, Orientierung
+  [( )] magnetische Feldstärke, Beschleunigung, Orientierung
 
