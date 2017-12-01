@@ -250,14 +250,14 @@ Wie auch in der letzten Aufgabe haben wir noch ein paar kurze Fragen an euch.
 
 ## Analog-Digital-Wandler
 
-**Welche Vorteile hat ein Flash-ADC gegenüber einem Analog-Digital-Wandler, der nach dem Wägeverfahren arbeitet?**
+**Welche Vorteile hat ein 8-Bit Flash-ADC gegenüber einem 8-Bit Analog-Digital-Wandler, der nach dem Wägeverfahren arbeitet?**
 
   [[X]] Er benötigt keinen Digital-Analog-Wandler
-  [[ ]] Er ist kostengünstiger
+  [[ ]] Er benötigt weniger Komparatoren
   [[X]] Er benötigt weniger Taktzyklen
   [[ ]] Er hat (im Allgemeinen) geringere Anschaffungskosten
 
-**Welche Schaltung wird zur Umsetzung eines Analog-Digital-Wandler, der nach dem Wägeverfahren arbeitet, benötigt?**
+**Welche Schaltung wird zur Umsetzung eines Analog-Digital-Wandler benötigt?**
 
   [( )] Eine H-Brücke
   [( )] Ein Schwingkreis
@@ -274,7 +274,7 @@ Wie auch in der letzten Aufgabe haben wir noch ein paar kurze Fragen an euch.
 
 ## Distanzsensoren
 
-**Welche Vorgehen zur lichtbasierten Distanzmessung können unterschieden werden?**
+**Welche Vorgehen zur lichtbasieren Distanzmessung können unterschieden werden?**
 
   [[X]] Time-of-Flight
   [[X]] Laufzeitmessung
@@ -283,7 +283,7 @@ Wie auch in der letzten Aufgabe haben wir noch ein paar kurze Fragen an euch.
   [[X]] Phasenverschiebung
   [[ ]] Parallelverschiebung
 
-**Auf welchem Vorgehen zur lichtbasierten Distanzmessung basiert der SharpGP2Y0A41SK0F?**
+**Auf welchem Vorgehen zur Distanzmessung basiert der SharpGP2Y0A41SK0F?**
 
   [( )] Time-of-Flight
   [( )] Laufzeitmessung
@@ -294,7 +294,7 @@ Wie auch in der letzten Aufgabe haben wir noch ein paar kurze Fragen an euch.
   
 ## Inertiale Messeinheit
 
-**Aus welchen Sensoren besteht eine typische inertiale Messeinheit?**
+**Aus welchen Sensoren besteht die IMU (MPU-9255)?**
 
   [( )] Temperatursensor, Distanzsensor
   [( )] Gyroskop, Beschleunigungssensor, Distanzsensor
