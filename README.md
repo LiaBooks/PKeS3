@@ -23,7 +23,7 @@ Während der Fokus der vorhergehenden Aufgaben auf den aktorischen Hardwarekompo
 Mit ihnen wird es uns möglich sein, bestimmte Eigenschaften der Umgebung unseres Roboters zu überwachen. Die erhaltenen Umgebungsinformationen können wir in der nächsten Aufgabe nutzen, um eine intelligente Bewegungsstrategie umzusetzen.
 
 --{{3}}--
-Bei den Sensoren, die wir in dieser Aufgabe ansteuern und auslesen werden, handelt es sich um zwei infrarot Distanzsensoren, sowie eine intertiale Messeinheit (engl. *inertial measurement unit (IMU)*)
+Bei den Sensoren, die wir in dieser Aufgabe ansteuern und auslesen werden, handelt es sich um zwei Infrarot-Distanzsensoren, sowie eine intertiale Messeinheit (engl. *inertial measurement unit (IMU)*)
 
 --{{4}}--
 Mit Hilfe der Distanzsensoren können wir den Nah- und Fernbereich der Vorderseite unseres Roboters überwachen. Diese Informationen sind z.B. zur Implementierung einer Kollisionsvermeidung hilfreich.
@@ -43,7 +43,7 @@ Entsprechend der bereits angesprochenen Sensorik (IR-Distanzsensoren, IMU) bilde
 Allerdings unterscheidet sich je nach Sensorik, dessen Ausführung und Anbindung an den Mikrocontroller das Vorgehen zum Auslesen aktueller Sensorwerte.
 
 --{{3}}--
-Im Allgemeinen geben Sensoren zunächst analoge Spannungswerte aus, die mit dem Wert der gemessenen Umgebungsgröße funktional korrelieren. Diese müssen mit Hilfe eines Analog-Digital-Wandlers *(engl. analog-digital converter (ADC))* zunächst in digitale Spannungswerte umgesetzt werden. In Abhängigkeit von der konkreten Ausführung des Sensors, kann dies bereits innerhalb des Sensors geschehen, oder muss durch einen externen ADC implementiert werden.
+Im Allgemeinen geben Sensoren zunächst analoge Spannungswerte aus, die mit dem Wert der gemessenen Umgebungsgröße funktional korrelieren. Diese müssen mit Hilfe eines Analog-Digital-Wandlers *(engl. analog-digital converter (ADC))* zunächst in digitale Werte umgesetzt werden. In Abhängigkeit von der konkreten Ausführung des Sensors, kann dies bereits innerhalb des Sensors geschehen, oder muss durch einen externen ADC implementiert werden.
 
 --{{4}}--
 Anschließend an die Digitalisierung der Spannungswerte müssen diese noch entsprechend der Sensorkennlinie in die eigentlich zu messende Umgebungsgröße umgerechnet werden.
@@ -173,7 +173,7 @@ Das Ziel dieser Aufgabe ist es, die Distanzsensoren an der Vorderseite unserer R
 Der erste Schritt dazu ist, den entsprechenden Analog-Digital-Konverter für die Verwendung mit den Distanzsensoren zu konfigurieren. Dies soll in der Funktion `configADC()` geschehen.
 
 --{{3}}--
-Damit das Auslesen der Sensorwerte zyklisch geschehen kann, implementiert ihr im nächsten Schritt die Funktion `readADC(uint8_t channel)`, die den aktuellen, digitalisierten Spannungswert des ausgewählten Sensors liefern soll.
+Damit das Auslesen der Sensorwerte zyklisch geschehen kann, implementiert ihr im nächsten Schritt die Funktion `readADC(uint8_t channel)`, die den aktuellen, digitalisierten Spannungswert des ausgewählten Sensors in mV liefern soll.
 
 --{{4}}--
 Im letzten Schritt muss der digitalisierte Spannungswert entsprechend der Kennlinie des jeweiligen Distanzsensors in Milimeter konvertiert werden. Implementiert dazu die Funktionen `linearizeLR(uint16_t voltage)` und `linearizeSR(uint16_t voltage)` (wobei *LR* für *Long Range* und *SR* für *Short Range* steht). Ihr könnt dazu die entsprechenden Kennlinien aus den Datenblättern der Sensoren nutzen. Beachtet, dass wir die Distanzwerte in Millimeter (mm) darstellen wollen!
@@ -184,7 +184,7 @@ Implementiert das Auslesen der Sensorwerte beider Distanzsensoren und konvertier
 **Teilschritte:**
 
 1. Konfiguriert Analog-Digital-Wandler für die Verwendung mit den Distanzsensoren.
-2. Implementiert Funktion `readADC(uint8_t channel)` zum Auslesen der Distanzsensoren (digitalisierte Spannungswerte).
+2. Implementiert Funktion `readADC(uint8_t channel)` zum Auslesen der Distanzsensoren (digitalisierte Spannungswerte in mV).
 3. Implementiert Funktionen `linearizeLR(uint16_t voltage)` und `linearizeSR(uint16_t voltage)` zur Transformation der Spannungswerte in Distanzwerte (mm) für beide Sensoren.
 
 ## Aufgabe 3.2
