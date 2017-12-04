@@ -136,13 +136,17 @@ Wie bereits angedeutet, liefern einige Sensoren lediglich analoge Spannungswerte
 Im Gegensatz zu den Distanzssensoren überliefert die IMU bereits digitalisierte Spannungswerte. Allerdings ist die IMU über einen I^2^C-Bus angeschlossen, den ihr nutzen müsst, um die IMU entsprechend zu konfigurieren und aktuelle Sensorwerte auszulesen. Dies soll in der zweiten Teilaufgabe implementiert werden. Ähnlich zu den Distanzsensoren müssen auch hier die von dem Sensor gelieferten Werte konvertiert werden.
 
 --{{4}}--
-Letztlich sollen die gemessenen Sensorwerte nun noch durch das Arduinoview-Interface, wie auch durch die 8-Segment-Anzeigen, dargestellt werden. Diese Darstellung sollt ihr in der letzten Teilaufgabe implementieren. Darüber hinaus sollen die Informationen der IMU genutzt werden, um ein einfaches Positionstracking zu implementieren.
+Letztlich sollen die gemessenen Sensorwerte nun noch durch das Arduinoview-Interface, wie auch durch die 8-Segment-Anzeigen, dargestellt werden. Diese Darstellung sollt ihr in der letzten Teilaufgabe implementieren. Darüber hinaus sollen die Informationen der IMU genutzt werden, um die Orientierung des Roboters zu verfolgen und seine aktuelle Geschwindigkeit anzuzeigen.
 
 --{{5}}--
 Im Gegensatz zu den bisherigen Aufgaben greifen wir diesesmal auf eure bisherigen Implementierungen zurück. Dies betrifft die Ansteuerung der 8-Segment-Anzeigen, sowie der Motoren. Während die 8-Segment-Anzeige direkt zur Bearbeitung der Aufgabe notwendig ist, könnt ihr die Motoren und den zur Ansteuerung bekannten *Joystick* nutzen, um den Roboter zu bewegen und so eure Sensorik zu testen. 
 
 --{{6}}--
 Damit ihr eure Lösungen aus den vorherigen Aufgaben weiter nutzen könnt, müsst ihr sie aus den entsprechenden Projekten kopieren. Wie ihr sicherlich bemerkt habt, befindet sich das eLab noch in einem jungen Stadium, sodass wir noch keine Gelegenheit hatten für einen automatisierten Austausch des Quellcodes zwischen Projekten/Aufgaben zu sorgen. Wir bitten das zu entschuldigen.
+
+--{{7}}--
+In den Vorlagen zu dieser Aufgabe findet ihr außerdem eine zusätzliche Bibliothek: `everytime.h` mit ihr könnt ihr Programmteile periodisch ausführen (z.B. all 300ms), ohne dazu die Programmausführung unterbrechen zu müssen, wie es mit `delay()` der Fall wäre.
+
 
 
 **Hinweis:**
@@ -154,7 +158,8 @@ Damit ihr eure Lösungen aus den vorherigen Aufgaben weiter nutzen könnt, müss
 
 * *3.1:* Auslesen der Distanzsensoren und Konvertieren der Sensorwerte.
 * *3.2:* Auslesen der IMU und Konvertieren der Sensorwerte.
-* *3.4:* Visualisierung der Sensorwerte, Anzeige auf den 8-Segment-Anzeigen und Implementierung eines einfachen Positionstracking
+* *3.3:* Visualisierung der Sensorwerte, Anzeige auf den 8-Segment-Anzeigen und Implementierung einer Orientierungs- und Geschwindigkeitsüberwachung.
+* *B.2:* Berechnen der Roboterposition relativ zur Startposition.
 
 Die Aufgabe ist bis zu der Woche vom **18.12. - 22.12.2017** vorzubereiten.
 
@@ -191,13 +196,13 @@ Nachdem wir nun die Ansteuerung der Distanzsensoren erfolgreich implementiert ha
 Die IMU ist, im Gegensatz zu den Distanzsensoren, per I^2^C an den Mikrocontroller angeschlossen. Daher haben wir euch eine Implementierung zur Kommunikation mit der IMU vorgegeben. Um diese zu Initialisieren, müsst ihr zunächst `initializeIMU()` aufrufen.
 
 --{{3}}--
-Anschließend könnt ihr mit Hilfe der I^2^C-Kommunikation die aktuellen Sensorwerte aus der IMU auslesen. Dort sind vorallem die Beschleunigungs- und Drehraten für uns von interesse. Daher füllt die Funktion `readIMU(struct IMUdata& d)` die Struktur `IMUdata`.
+Anschließend könnt ihr mit Hilfe der I^2^C-Kommunikation die aktuellen Sensorwerte aus der IMU auslesen. Dort sind vorallem die Beschleunigungen und Drehraten für uns von interesse. Daher füllt die Funktion `readIMU(struct IMUdata& d)` die Struktur `IMUdata`.
 
 --{{4}}--
-Wie schon bei den Distanzsensoren erhaltet ihr von der IMU lediglich Werte die proportional zu den Beschleunigungen bzw. Drehraten sind. Daher müsst ihr auch diese Werte in $\frac{m}{s^2}$ bzw. $\frac{deg}{s}$ konvertieren. Implementiert dazu die Funktion `linearizeIMU(struct IMUdata& data)`.
+Wie schon bei den Distanzsensoren erhaltet ihr von der IMU lediglich Werte die proportional zu den Beschleunigungen bzw. Drehraten sind. Daher müsst ihr auch diese Werte in $\frac{m}{s^2}$ bzw. $\frac{rad}{s}$ konvertieren. Implementiert dazu die Funktion `readIMUscaled(struct IMUdataf& data)`.
 
 **Ziel:**
-Implementiert das Auslesen und Transformieren der Beschleunigungs- und  Drehratenwerte der IMU. Beschleunigungen sollen in $\frac{m}{s^2}$ und Drehraten in $\frac{deg}{s}$ repräsentiert werden.
+Implementiert das Auslesen und Transformieren der Beschleunigungs- und  Drehratenwerte der IMU. Beschleunigungen sollen in $\frac{m}{s^2}$ und Drehraten in $\frac{rad}{s}$ repräsentiert werden.
 
 **Teilschritte:**
 
@@ -209,7 +214,7 @@ Implementiert das Auslesen und Transformieren der Beschleunigungs- und  Drehrate
 Da wir nun die Umgebung unseres Roboters mit Hilfe unserer Sensoren beobachten können, wollen wir die erhaltenen Werte natürlich noch entsprechend darstellen.
 
 --{{2}}--
-Daher besteht das Ziel dieser Aufgabe darin, die Sensorwerte mit Hilfe von Arduinoview zu visualisieren und ein einfaches Positionstracking zu implementieren.
+Daher besteht das Ziel dieser Aufgabe darin, die Sensorwerte mit Hilfe von Arduinoview zu visualisieren und ein Orientierungs- ung Geschwindigkeitsüberwachung zu implementieren.
 
 --{{3}}--
 Im ersten Schritt solltet ihr eurem Arduinoview ein Diagramm hinzufügen, in dem ihr die aktuellen Werte der Distanzsensoren visualisiert.
@@ -224,10 +229,13 @@ Da uns die IMU auch Drehraten für die 3 Achsen bereitstellt, sollen auch diese 
 Da uns durch die Aufgabe 1 nun auch die 8-Segment-Anzeigen zur Darstellung von Zeichen zur Verfügung steht, wollen wir diese natürlich auch nutzen. Gebt daher jeweils den kleinsten der beiden Distanzwerte auf der Anzeige aus. Falls lediglich ein Distanzsensor valide Werte liefert, gebt ihr diesen aus. Falls beide Distanzsensoren keine validen Werte liefern, gebt ein '---' auf dem Display aus. 
 
 --{{7}}--
-Zuletzt möchten wir die Daten der IMU für ein einfaches Positionstracking nutzen. Lest dazu sowohl die Beschleunigungs- als auch die Drehraten der IMU über die gesamte Ausführungszeit aus und konvertiert sie so, dass ihr eine Positions- und Orientierungsangabe relativ zu der Startposition des Roboters erhaltet. Gebt letztlich die Position ($x~in~[mm]$ , $y~in~[mm]$) und Orientierung ($\theta~in~[^\circ]$) über das Arduinoview-Interface kontinuierlich aus.
+Zuletzt möchten wir die Daten der IMU zur Überwachung der Orientierung und Geschwindigkeit des Roboters nutzen. Lest dazu sowohl die Beschleunigungs- als auch die Drehraten der IMU über die gesamte Ausführungszeit aus und konvertiert sie so, dass ihr eine Geschwindigkeits- und Orientierungsangabe relativ zu der Startposition des Roboters erhaltet. Gebt letztlich die Geschwindigkeit ($v~in~[\frac{mm}{s}]$) und Orientierung ($\theta~in~[rad]$) über das Arduinoview-Interface kontinuierlich aus.
 
 **Ziel:**
-Visualisiert die Sensordaten mit Diagrammen in Arduinoview und zeigt die Position ($x$,$y$) und Orientierung ($\theta$) des Roboters relativ zu seiner Startposition an.
+Visualisiert die Sensordaten mit Diagrammen in Arduinoview und zeigt die Geschwindigkeit ($v~in~[\frac{mm}{s}]$) und Orientierung ($\theta~in~[rad]$) des Roboters relativ zu seiner Startposition an.
+
+**Hinweis:**
+Da durch die Anzahl der Diagramm die Darstellung durch Arduinoview unübersichtlich werden kann, könnt ihr jeweils die Werte auch in textueller Form darstellen und periodisch aktualisieren.
 
 **Teilschritte:**
 
@@ -240,7 +248,18 @@ Visualisiert die Sensordaten mit Diagrammen in Arduinoview und zeigt die Positio
    * Falls die lediglich ein Distanzwert valide ist, gebt diesen Wert aus.
    * Falls kein Distanzsensor einen validen Wert liefert, gebt '---' auf dem Display aus.
    
-5. Konvertiert die Beschleunigungs- und Drehratenwerte in eine Roboterposition und -Orientierung, d.h. $x$,$y$,$\theta$.
+5. Konvertiert die Beschleunigungs- und Drehratenwerte in eine Robotergeschwindigkeit und -Orientierung, d.h. $v$ und $\theta$.
+
+## Bonusaufgabe B.2
+
+--{{1}}--
+Neben der Geschwindigkeitsüberwachung erlauben uns die Beschleunigungswerte in $x$ und $y$ Richtung, auch die Implementierung einer Positionsüberwachung. Daher ist das Ziel dieser Bonusaufgabe, die Berechnung der Position ($x~in~[mm]$, $y~in~[mm]$).
+
+--{{2}}--
+Wie stabil ist die Positionsangabe? Welche Gründe könnte die auftretende Unsicherheit haben und wie könnten die Unsicherheit reduziert werden?
+
+**Ziel:**
+Berechnet die Roboterposition ($x$,$y$) mit Hilfe der IMU Daten.
 
 
 # Quizze
