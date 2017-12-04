@@ -62,8 +62,8 @@ Mit Hilfe dieses Vorgehens und der angesprochenen Sensorik, ist das Ziel dieser 
 **Ziel(e):**
 
 * Messen von Entfernungen durch Infrarot-Sensorik
-* Messen von Positions- und Orientierungsänderungen
-* Interpretation der Sensorwerte über die Zeit (Position, Orientierung)
+* Messen von Beschleunigungen und Orientierungsänderungen
+* Interpretation der Sensorwerte über die Zeit (Geschwindigkeit, Orientierung)
 
 
 ## Weitere Informationen
