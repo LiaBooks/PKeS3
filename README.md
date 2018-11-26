@@ -941,8 +941,9 @@ Unsicherheit haben und wie könnten die Unsicherheit reduziert werden?
 #include <FrameStream.h>
 #include <Frameiterator.h>
 #include <avr/io.h>
+#include "IMU.h"
 
-#define OUTPUT__BAUD_RATE 57600
+#define OUTPUT__BAUD_RATE 9600
 FrameStream frm(Serial1);
 
 // Forward declarations
